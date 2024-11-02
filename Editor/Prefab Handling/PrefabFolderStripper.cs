@@ -133,7 +133,7 @@
                     }
                     else
                     {
-                        folder.Flatten(strippingMode, StripSettings.CapitalizeName);
+                        folder.Flatten(strippingMode, StripSettings.CapitalizeName, StripSettings.AddSeparatorSymbols);
                     }
                 }
             }

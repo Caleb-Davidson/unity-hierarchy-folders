@@ -16,6 +16,7 @@
             { nameof(StripSettings.PlayMode), "Play Mode Stripping Type" },
             { nameof(StripSettings.Build), "Build Stripping Type" },
             { nameof(StripSettings.CapitalizeName), "Capitalize Folder Names" },
+            { nameof(StripSettings.AddSeparatorSymbols), "Add Separator Symbols" },
             { nameof(StripSettings.StripFoldersFromPrefabsInPlayMode), "Strip folders from prefabs in Play Mode" },
             { nameof(StripSettings.StripFoldersFromPrefabsInBuild), "Strip folders from prefabs in build" },
         };
@@ -41,6 +42,10 @@
             {
                 StripSettings.CapitalizeName = EditorGUILayout.Toggle(
                     _fieldNames[nameof(StripSettings.CapitalizeName)], StripSettings.CapitalizeName);
+                
+                StripSettings.AddSeparatorSymbols = EditorGUILayout.Toggle(
+                    new GUIContent(_fieldNames[nameof(StripSettings.AddSeparatorSymbols)], "If enabled the created separators will be named \"=== $originalName ===\""), 
+                    StripSettings.AddSeparatorSymbols);
             }
 
             StripSettings.Build = (StrippingMode) EditorGUILayout.EnumPopup(

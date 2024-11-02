@@ -35,7 +35,7 @@ namespace UnityHierarchyFolders.Editor
 
             foreach (var folder in Object.FindObjectsOfType<Folder>())
             {
-                folder.Flatten(strippingMode, StripSettings.CapitalizeName);
+                folder.Flatten(strippingMode, StripSettings.CapitalizeName, StripSettings.AddSeparatorSymbols);
             }
         }
     }

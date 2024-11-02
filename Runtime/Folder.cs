@@ -188,14 +188,18 @@ namespace UnityHierarchyFolders.Runtime
         /// Whether to capitalize the folder name when replacing it with a separator.
         /// Applies only if <paramref name="strippingMode"/> is <see cref="StrippingMode.ReplaceWithSeparator"/>
         /// </param>
-        public void Flatten(StrippingMode strippingMode, bool capitalizeFolderName)
+        /// <param name="renameSeparator">
+        /// Whether to capitalize the folder name when replacing it with a separator.
+        /// Applies only if <paramref name="strippingMode"/> is <see cref="StrippingMode.ReplaceWithSeparator"/>
+        /// </param>
+        public void Flatten(StrippingMode strippingMode, bool capitalizeFolderName, bool renameSeparator)
         {
             if (strippingMode == StrippingMode.DoNothing)
                 return;
 
             MoveChildrenOut(strippingMode);
 
-            HandleSelf(strippingMode, capitalizeFolderName);
+            HandleSelf(strippingMode, capitalizeFolderName, renameSeparator);
         }
 
         private void MoveChildrenOut(StrippingMode strippingMode)
@@ -218,15 +222,26 @@ namespace UnityHierarchyFolders.Runtime
             }
         }
 
-        private void HandleSelf(StrippingMode strippingMode, bool capitalizeFolderName)
+        private void HandleSelf(StrippingMode strippingMode, bool capitalizeFolderName, bool addSeparatorSymbols)
         {
-            if (strippingMode == StrippingMode.ReplaceWithSeparator)
+            if (strippingMode == StrippingMode.ReplaceWithSeparator) 
             {
-                // If the folder name is already a separator, don't change it.
-                if ( ! name.StartsWith("--- "))
+                var newName = string.Empty;
+                
+                // If the folder name already starts with a separator, don't change it.
+                if (addSeparatorSymbols && ! name.StartsWith("--- "))
                 {
-                    name = $"--- {(capitalizeFolderName ? name.ToUpper() : name)} ---";
+                    newName += "---";
                 }
+                
+                newName += capitalizeFolderName ? name.ToUpper() : name;
+                
+                if (addSeparatorSymbols && ! name.EndsWith(" ---"))
+                {
+                    newName += " ---";
+                }
+                
+                name = newName;
 
                 return;
             }
